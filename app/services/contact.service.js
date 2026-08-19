@@ -12,8 +12,9 @@ class ContactService {
             address: payload.address,
             phone: payload.phone,
             favorite: payload.favorite,
+            hobbies: payload.hobbies,
         };
-        // Remove undefined fields
+  
         Object.keys(contact).forEach(
             (key) => contact[key] === undefined && delete contact[key]
         );
@@ -24,7 +25,7 @@ class ContactService {
         const contact = this.extractConactData(payload);
         const result = await this.Contact.findOneAndUpdate(
             contact,
-            { $set: { favorite: contact.favorite === true } },
+            { $set: contact }, 
             { returnDocument: "after", upsert: true }
         );
         return result; 
